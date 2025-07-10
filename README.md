@@ -1,123 +1,131 @@
 # Contact Energy Invoice Extractor
 
-I wanted to know some insights about my Contact Energy invoices, so I created this project to automate the extraction and processing of billing data from PDF invoices.
+A Python tool to automatically extract, process, and analyze billing data from Contact Energy PDF invoices, generating structured CSV files for reporting and insights.
 
-This project extracts and processes data from Contact Energy PDF invoices, converting them into structured CSV files for analysis and reporting.
+![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-## Overview
+## 📋 Overview
 
-The Contact Energy Invoice Extractor automates the extraction of important billing information from Contact Energy PDF invoices. It parses various data elements such as:
+The Contact Energy Invoice Extractor transforms unstructured data from your electricity and broadband invoices into organized, analyzable datasets. This tool addresses the challenge of manually tracking energy consumption, costs, and patterns across multiple billing periods.
 
-- Basic invoice information (dates, customer numbers)
-- Energy usage details (imported and exported)
-- Daily charges
-- Variable charges
-- Broadband and fibre charges
-- No-charge items
+The tool parses various invoice elements including:
 
-The extracted data is organized into pandas DataFrames and exported as CSV files for easy analysis and record-keeping.
+- Basic invoice information (dates, customer numbers, invoice numbers)
+- Energy consumption details (imported, free, exported units)
+- Daily charges with different rate periods
+- Variable charges for different pricing components
+- Broadband and fibre service charges
 
-## Project Structure
+All CSV files are organized by billing aspect rather than by individual invoice. For example, every exported energy detail from all invoices is consolidated into a single CSV file dedicated to exported information. This structure makes it easy to analyze trends, totals, and patterns across all invoices for each category—such as energy usage, costs, and service charges—streamlining comprehensive reporting and insights. The resulting CSV files are ready for use in visualization or business intelligence platforms, enabling deeper analysis and data-driven decision making.
+
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Python 3.10+
+- PowerShell (for Windows users)
+
+### Installation and Use
+
+```powershell
+# Clone the repository
+git clone https://github.com/rickhehe/contact-energy-invoice-extractor.git
+cd contact-energy-invoice-extractor
+
+> **Note:** The steps for setting up the virtual environment and installing dependencies are automated in `scripts/run.ps1`. You do not need to run them manually.
+
+# Drop your Contact Energy PDFs into the data/raw folder
+# Simply drag and drop your PDF invoices into this folder
+
+# Run the extractor
+.\scripts\run.ps1
+
+# Find your results in data/processed folder
+explorer .\data\processed
+```
+
+## 📂 File Processing
+
+### How to Provide Input
+
+1. **Drag-and-Drop Simplicity**: Place your Contact Energy PDF invoices into the `data/raw/` folder.
+2. **Filename Pattern**: Invoices should use the default Contact Energy format: `*202Y-ContactBill.pdf` (e.g., `23-Dec-2024-ContactBill.pdf`).  
+   *You can customize the filename matching by editing the `PATH_PATTERN` regex in `main.py` to suit your own naming scheme.*
+3. **Automatic Discovery**: The extractor scans `data/raw/` and all subfolders, automatically finding and processing every valid invoice PDF.
+
+### Output: Structured CSV Files
+
+Processed invoice data is organized into distinct CSV files within the `data/processed/` directory. Each file corresponds to a specific billing aspect, making analysis straightforward:
+
+- `stg_contact_bill_basics.csv` — Essential invoice details (dates, customer numbers, invoice totals)
+- `stg_contact_bill_daily_charges.csv` — Daily charges, including rate periods and day counts
+- `stg_contact_bill_variable_charged.csv` — Variable charges based on energy consumption
+- `stg_contact_bill_fibre.csv` — Broadband and fibre service charges
+- `stg_contact_bill_exported.csv` — Credits for exported energy (e.g., solar generation)
+- `stg_contact_bill_no_charge.csv` — Allocations of free energy
+
+CSV files are only generated for applicable topics found in your invoices; if a category is not present, its file will not be created. This ensures your output remains relevant and clutter-free.
+
+## ✨ Key Features
+
+- **Multi-Component Invoice Handling**: Extracts and separately processes different charge types from the same invoice, including support for multiple prices for the same item within a single invoice (e.g., price changes or hikes over time)
+- **Category-Specific CSV Files**: Outputs specialized CSV files for each aspect of your bill for targeted analysis
+- **Robust Pattern Recognition**: Uses advanced regular expressions to accurately identify and extract data points
+- **Error Resilience**: Gracefully handles parsing challenges without failing
+- **Date Standardization**: Converts various date formats to consistent YYYYMMDD format for easy sorting and analysis
+- **Structured Data Model**: Converts unstructured PDF content into normalized, relational data tables
+- **Multi-Invoice Processing**: Batch processes multiple invoices in a single run
+
+## 📁 Project Structure
 
 ```plaintext
 contact-energy-invoice-extractor/
 │
 ├── data/
-│   ├── raw/                # Raw PDF invoice files (excluded from git)
-│   │   └── .gitkeep        # Placeholder to maintain directory in git
-│   ├── processed/          # Generated CSV output files
-│   └── README.md           # Data folder description
+│   ├── raw/                # Place your PDF invoices here
+│   └── processed/          # Generated CSV output files appear here
 │
-├── scripts/                # Scripts for setup and running the project
-│   └── run.ps1             # PowerShell script to run the project
+├── scripts/
+│   └── run.ps1             # PowerShell script for easy execution
 │
-├── src/                    # Source code (Python)
-│   ├── app.py              # Alternative application logic
-│   ├── main.py             # Main entry point and processing logic
-│   ├── extractor.py        # PDF extraction and regex parsing functions
-│   └── __pycache__/        # Python bytecode cache (excluded from git)
+├── src/                    # Source code
+│   ├── main.py             # Primary entry point and processing logic
+│   └── extractor.py        # PDF extraction and regex parsing functions
 │
 ├── .gitignore              # Git ignore configuration
 ├── requirements.txt        # Project dependencies
-└── README.md               # Project description
+└── README.md               # Project documentation
 ```
 
-## Installation
+## 🔮 Roadmap
 
-1. Clone the repository:
+Future enhancements planned for this project:
 
-   ```bash
-   git clone [repository URL]
-   cd contact-energy-invoice-extractor
-   ```
+- **Energy Usage Forecasting**: Predict future usage patterns and costs
+- **Bash support**: Add a Bash script identical to `run.ps1` for Linux users
 
-2. Set up a virtual environment:
+## 📄 License
 
-   ```bash
-   python -m venv .venv
-   ```
+MIT License
 
-3. Activate the virtual environment:
-   - Windows (PowerShell): `.\.venv\Scripts\Activate.ps1`
-   - Linux/macOS: `source .venv/bin/activate`
+Copyright (c) 2025
 
-4. Install dependencies:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-## Usage
-
-1. Place your Contact Energy PDF invoice files in the `data/raw/` directory.
-   - Supported filename format: *YYYY-contactbill.pdf (e.g., 23-Dec-2024-ContactBill.pdf)
-
-2. Run the project using the provided PowerShell script:
-
-   ```powershell
-   .\scripts\run.ps1
-   ```
-   
-   Or run the main module directly:
-
-   ```bash
-   python -m src.main
-   ```
-
-3. The processed data will be saved as CSV files in the `data/processed/` directory:
-   - `stg_contact_bill_basics.csv` - Basic invoice information
-   - `stg_contact_bill_daily_charges.csv` - Daily charges
-   - `stg_contact_bill_variable_charged.csv` - Variable charges
-   - `stg_contact_bill_fibre.csv` - Fibre charges
-   - `stg_contact_bill_exported.csv` - Exported energy details
-   - `stg_contact_bill_no_charge.csv` - No-charge items
-
-## Key Features
-
-- **Robust PDF Text Extraction**: Extracts text from multi-page PDFs.
-- **Pattern Recognition**: Uses regular expressions to identify and extract specific data points.
-- **Structured Data Output**: Converts unstructured PDF data into organized DataFrames.
-- **Error Handling**: Gracefully handles parsing errors without crashing.
-- **Date Normalization**: Converts date strings to standardized format (YYYYMMDD).
-- **Nested Data Support**: Properly handles nested data structures (lists of items within invoices).
-
-## Dependencies
-
-- Python 3.x
-- pandas (>= 2.0.0)
-- PyPDF2 (>= 3.0.0)
-
-## Development Guidelines
-
-- All code uses snake_case for consistency.
-- Use virtual environment for isolation.
-- Add new test cases in the appropriate test directory.
-- Follow PEP 8 style guidelines.
-
-## License
-
-MIT License (MIT)
-
----
-
-Feel free to update this file with more project-specific details.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
