@@ -67,7 +67,7 @@ def process_file(file_path):
             {
                 'item': item,
                 'unit': unit,
-                'price': price
+                'price': round( 0.01 * float(price), 4 )
                 }
             for item, unit, price in variable_charged
         ]
@@ -90,7 +90,7 @@ def process_file(file_path):
             {
                 'item': item,
                 'unit': unit,
-                'price': price
+                'price': round( 0.01 * float(price), 4 )
                 }
             for item, unit, price in exported
         ]
@@ -101,7 +101,7 @@ def process_file(file_path):
             {
                 'no_charge_item': item,
                 'no_charge_unit': unit,
-                'no_charge_price': price
+                'no_charge_price': round( 0.01 * float(price), 4 )
                 }
             for item, unit, price in no_charge
         ]
@@ -143,6 +143,7 @@ def get_dfs():
             continue
     
     return dfs
+
 
 def main():
 

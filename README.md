@@ -17,6 +17,8 @@ The tool parses various invoice elements including:
 - Variable charges for different pricing components
 - Broadband and fibre service charges
 
+> **Note:** Tariff charges are not currently covered in the extraction process. This is a planned feature for future releases.
+
 All CSV files are organized by billing aspect rather than by individual invoice. For example, every exported energy detail from all invoices is consolidated into a single CSV file dedicated to exported information. This structure makes it easy to analyze trends, totals, and patterns across all invoices for each category—such as energy usage, costs, and service charges—streamlining comprehensive reporting and insights. The resulting CSV files are ready for use in visualization or business intelligence platforms, enabling deeper analysis and data-driven decision making.
 
 
@@ -61,7 +63,7 @@ Processed invoice data is organized into distinct CSV files within the `data/pro
 
 - `stg_contact_bill_basics.csv` — Essential invoice details (dates, customer numbers, invoice totals)
 - `stg_contact_bill_daily_charges.csv` — Daily charges, including rate periods and day counts
-- `stg_contact_bill_variable_charged.csv` — Variable charges based on energy consumption
+- `stg_contact_bill_variable_charged.csv` — Variable charges based on energy consumption (price converted from cents to dollars)
 - `stg_contact_bill_fibre.csv` — Broadband and fibre service charges
 - `stg_contact_bill_exported.csv` — Credits for exported energy (e.g., solar generation)
 - `stg_contact_bill_no_charge.csv` — Allocations of free energy
@@ -75,6 +77,7 @@ CSV files are only generated for applicable topics found in your invoices; if a 
 - **Robust Pattern Recognition**: Uses advanced regular expressions to accurately identify and extract data points
 - **Error Resilience**: Gracefully handles parsing challenges without failing
 - **Date Standardization**: Converts various date formats to consistent YYYYMMDD format for easy sorting and analysis
+- **Unit Conversion**: Automatically converts price units from cents to dollars for variable charges
 - **Structured Data Model**: Converts unstructured PDF content into normalized, relational data tables
 - **Multi-Invoice Processing**: Batch processes multiple invoices in a single run
 
