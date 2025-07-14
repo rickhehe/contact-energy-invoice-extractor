@@ -54,10 +54,11 @@ def process_file(file_path):
     if daily_charges:
         data['daily_charges'] = [
             {
+                'item': item,
                 'days_charged': days,
                 'daily_charge': charge
                 }
-            for days, charge in daily_charges
+            for item, days, charge in daily_charges
         ]   
 
     variable_charged = get_variable_charged(text)
@@ -151,7 +152,7 @@ def main():
     for k, v in dfs.items():
         print(f"Processing {k} with {len(v)} dataframes.")
         print(v)
-        v.to_csv(f'{PROCESSED}/stg_contact_bill_{k}.csv', index=None)
+        v.to_csv(f'{PROCESSED}/fact_contact_energy_bill_{k}.csv', index=None)
 
 
 if __name__ == "__main__":

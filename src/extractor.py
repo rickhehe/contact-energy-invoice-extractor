@@ -78,7 +78,7 @@ def get_daily_charges(text):
     Finds all "daily charge" entries and returns a list of tuples.
     Each tuple is (days, charge_per_day), e.g., [('30', '1.20'), ('2', '1.25')]
     """
-    pattern = re.compile(r'(?:daily charge\W+)(\d+) days\W+([\d.]+?) dollars', flags=re.I)
+    pattern = re.compile(r'(daily charge)\W+(\d+) days\W+([\d.]+?) dollars', flags=re.I)
     matches = pattern.findall(text)
     return matches if matches else []
 

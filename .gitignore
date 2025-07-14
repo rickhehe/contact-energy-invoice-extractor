@@ -155,8 +155,9 @@ Icon
 ._*
 
 # Project specific
-# Don't track any files in data/raw directory or subdirectories
+# Don't track any files in data/raw and data/processed directory or subdirectories
 data/raw/*
+data/processed/*
 !data/raw/.gitkeep
 
 # Uncomment if you don't want to track your processed files
