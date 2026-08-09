@@ -62,9 +62,9 @@ def get_energy_exported(text):
 
 
 def get_total_amount_due(text):
-    pattern = re.compile(r'(?<=please pay by\W)(\d+\W\w+\W\d+)\W+(.+)', flags=re.I)
+    pattern = re.compile(r'(?<=please pay by\W)\d+\W\w+\W\d+\W+\$(.+)', flags=re.I)
     match = pattern.search(text)
-    return match.group(1), match.group(2)
+    return match.group(1) if match else None
 
 
 def get_broadband_charges(text):
