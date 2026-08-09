@@ -156,9 +156,11 @@ Icon
 
 # Project specific
 # Don't track any files in data/raw and data/processed directory or subdirectories
+# (invoices and generated reports contain personal billing data)
 data/raw/*
 data/processed/*
 !data/raw/.gitkeep
+!data/processed/.gitkeep
 
-# Uncomment if you don't want to track your processed files
-# data/processed/
+# uv
+.uv_cache/

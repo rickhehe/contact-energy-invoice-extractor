@@ -1,29 +1,13 @@
-# PowerShell script to run app.py with venv and requirements.txt checks using 'snake'
+# PowerShell script to run the app using uv, which manages the venv and dependencies automatically
 
-# Set variables
-$venv_path = "./.venv"
-$requirements = "./requirements.txt"
-
-# Check for venv, create if missing
-if (!(Test-Path $venv_path)) {
-    Write-Host "Virtual environment not found. Creating venv..."
-    python -m venv $venv_path
+# Ensure uv is available
+if (!(Get-Command uv -ErrorAction SilentlyContinue)) {
+    Write-Host "uv not found. Install it from https://docs.astral.sh/uv/getting-started/installation/"
+    exit 1
 }
 
-# Activate venv
-$activate_script = Join-Path $venv_path "Scripts/Activate.ps1"
-. $activate_script
-
-# Check for requirements.txt and install if present
-if (Test-Path $requirements) {
-    Write-Host "Installing dependencies from requirements.txt..."
-    python -m pip install -r $requirements | Out-Null
-} else {
-    Write-Host "requirements.txt not found. Skipping dependency installation."
-}
+# Sync the environment with pyproject.toml/uv.lock (creates .venv and installs dependencies as needed)
+uv sync
 
 # Run the app
-python -m src.main
-
-# Deactivate the virtual environment
-deactivate
+uv run python -m src.main
