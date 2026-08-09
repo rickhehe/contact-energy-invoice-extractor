@@ -26,7 +26,8 @@ All CSV files are organized by billing aspect rather than by individual invoice.
 
 ### Prerequisites
 
-- Python 3.10+
+- Python 3.12+
+- [uv](https://docs.astral.sh/uv/getting-started/installation/)
 - PowerShell (for Windows users)
 
 ### Installation and Use
@@ -36,7 +37,7 @@ All CSV files are organized by billing aspect rather than by individual invoice.
 git clone https://github.com/rickhehe/contact-energy-invoice-extractor.git
 cd contact-energy-invoice-extractor
 
-> **Note:** The steps for setting up the virtual environment and installing dependencies are automated in `scripts/run.ps1`. You do not need to run them manually.
+> **Note:** `scripts/run.ps1` uses `uv` to create the virtual environment and install dependencies automatically. You do not need to run these steps manually.
 
 # Drop your Contact Energy PDFs into the data/raw folder
 # Simply drag and drop your PDF invoices into this folder
@@ -98,7 +99,7 @@ contact-energy-invoice-extractor/
 │   └── extractor.py        # PDF extraction and regex parsing functions
 │
 ├── .gitignore              # Git ignore configuration
-├── requirements.txt        # Project dependencies
+├── pyproject.toml          # Project metadata and dependencies (used by uv)
 └── README.md               # Project documentation
 ```
 
