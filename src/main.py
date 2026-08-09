@@ -48,6 +48,7 @@ def process_file(file_path):
         'energy_imported': get_energy_imported(text),
         'energy_exported': get_energy_exported(text),
         'broadband_charges': get_broadband_charges(text),
+        'total_amount_due': get_total_amount_due(text),
     }
 
     daily_charges = get_daily_charges(text)
